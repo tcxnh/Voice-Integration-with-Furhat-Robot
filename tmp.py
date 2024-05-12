@@ -5,59 +5,45 @@ from furhat_remote_api import FurhatRemoteAPI
 from generate_cloned_voice import generate_cloned_voice
 from record_audio import record_audio
 
-#### Not working, input overflow 
-
 furhat = FurhatRemoteAPI("localhost")
 
-CHUNK = 4096
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 16000
-SILENCE_THRESHOLD = 500  # Adjust this value as needed
-SILENCE_DURATION = 1  # Adjust this value as needed (in seconds)
+# 目前的问题就是把furhat说的也录进去了, 而且一定要say something要不然出bug
 
-"""
-def record_user_speech(output_filename):
-    audio = pyaudio.PyAudio()
-    stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
-    frames = []
-    silence_frames = 0
+import random
+import time
+import wave
 
-    furhat.say(text="I'm listening. Please speak.")
-    speech_result = furhat.listen()
+greetings = [
+    "Hi there!",
+    "Hello, how are you?",
+    "Greetings!",
+    "Hey there, friend!",
+    "Good day to you!",
+    "Hello, it's nice to meet you!",
+    # Add more greetings as desired
+]
 
-    while speech_result.message or silence_frames < SILENCE_DURATION * RATE // CHUNK:
-        data = stream.read(CHUNK)
-        frames.append(data)
+def continuous_loop():
+    while True:
+        user_speech = record_audio(10)
 
-        if max(data) < SILENCE_THRESHOLD:
-            silence_frames += 1
+        if user_speech:
+            # Choose a random greeting from the list
+            input_text = random.choice(greetings)
+            generate_cloned_voice(user_speech, input_text)
+
+            s3url = upload_audio("outputs/output_en_default.wav")
+
+            # Get the length of the audio file
+            with wave.open("outputs/output_en_default.wav", "r") as wav:
+                audio_length = wav.getnframes() / wav.getframerate()
+
+            furhat.say(url=s3url)
+
+            # Wait for the audio to finish playing
+            time.sleep(audio_length + 1)  # Sleep for the audio length plus an extra second
         else:
-            silence_frames = 0
+            furhat.say(text="I didn't catch that. Please try again.")
+            time.sleep(2)  # Adjust the sleep duration as needed
 
-        if speech_result.message:
-            speech_result = furhat.listen()
-
-    stream.stop_stream()
-    stream.close()
-    audio.terminate()
-
-    wf = wave.open(output_filename, 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(audio.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
-
-    return b''.join(frames)
-"""
-
-while True:
-    user_speech = record_audio(30,"recorded_audio.wav")
-    if user_speech:
-        generate_cloned_voice
-        ("recorded_audio.wav", "I love u, can you hang out with me tomorrow")
-        s3url = upload_audio("outputs/output_chinese.wav")
-        furhat.say(url=s3url)
-    else:
-        furhat.say(text="I didn't catch that. Please try again.")
+continuous_loop()
