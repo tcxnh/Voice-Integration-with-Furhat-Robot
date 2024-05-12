@@ -30,20 +30,25 @@ def continuous_loop():
         if user_speech:
             # Choose a random greeting from the list
             input_text = random.choice(greetings)
-            generate_cloned_voice(user_speech, input_text)
 
-            s3url = upload_audio("outputs/output_en_default.wav")
+            try:
+                generate_cloned_voice(user_speech, input_text)
+                s3url = upload_audio("outputs/output_en_default.wav")
 
-            # Get the length of the audio file
-            with wave.open("outputs/output_en_default.wav", "r") as wav:
-                audio_length = wav.getnframes() / wav.getframerate()
+                # Get the length of the audio file
+                with wave.open("outputs/output_en_default.wav", "r") as wav:
+                    audio_length = wav.getnframes() / wav.getframerate()
 
-            furhat.say(url=s3url)
+                furhat.say(url=s3url)
 
-            # Wait for the audio to finish playing
-            time.sleep(audio_length + 1)  # Sleep for the audio length plus an extra second
+                # Wait for the audio to finish playing
+                time.sleep(audio_length + 1)  # Sleep for the audio length plus an extra second
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                furhat.say(text="I'm sorry, I couldn't process the audio. It seems that, you didn't speak anything. Please try again.")
+                time.sleep(2.5)
         else:
             furhat.say(text="I didn't catch that. Please try again.")
-            time.sleep(2)  # Adjust the sleep duration as needed
+            time.sleep(2)
 
 continuous_loop()
