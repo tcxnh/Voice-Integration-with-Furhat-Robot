@@ -12,35 +12,6 @@ furhat = FurhatRemoteAPI("localhost")
 import random
 import time
 import wave
-
-greetings = [
-    "Hi there!",
-    "Hello, how are you?",
-    "Greetings!",
-    "Hey there, friend!",
-    "Good day to you!",
-    "Hello, it's nice to meet you!",
-    # Add more greetings as desired
-]
-
-import random
-import time
-import wave
-import io
-
-greetings = [
-    "Hi there!",
-    "Hello, how are you?",
-    "Greetings!",
-    "Hey there, friend!",
-    "Good day to you!",
-    "Hello, it's nice to meet you!",
-    # Add more greetings as desired
-]
-
-import random
-import time
-import wave
 import os
 
 greetings = [
