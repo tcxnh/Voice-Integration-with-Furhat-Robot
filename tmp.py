@@ -1,58 +1,36 @@
-import pyaudio
 import wave
 from amazons3 import upload_audio
 from furhat_remote_api import FurhatRemoteAPI
 from generate_cloned_voice import generate_cloned_voice
 from record_audio import record_audio
+import random
+import time
+import os
 
 furhat = FurhatRemoteAPI("localhost")
 
 # 目前的问题就是把furhat说的也录进去了, 而且一定要say something要不然出bug
 
-import random
-import time
-import wave
-import os
+# Say "Hi there!"
+furhat.say(text="Hi there! I am here to show your the voice cloning function of furhat robot. Please say something to me and I will try to mimic your voice")
+time.sleep(10)
 
 greetings = [
-    "Hi there!",
-    "Hello, how are you?",
-    "Greetings!",
-    "Hey there, friend!",
-    "Good day to you!",
     "Hello, it's nice to meet you!",
-    # Add more greetings as desired
-]
-
-import random
-import time
-import wave
-import os
-import tempfile
-
-greetings = [
-    "Hi there!",
-    "Hello, how are you?",
-    "Greetings!",
-    "Hey there, friend!",
-    "Good day to you!",
-    "Hello, it's nice to meet you!",
-    # Add more greetings as desired
-]
-
-import random
-import time
-import wave
-import os
-
-greetings = [
-    "Hi there!",
-    "Hello, how are you?",
-    "Greetings!",
-    "Hey there, friend!",
-    "Good day to you!",
-    "Hello, it's nice to meet you!",
-    # Add more greetings as desired
+    "Welcome! It's a pleasure to have you here.",
+    "Hey, how's it going? Great to see you!",
+    "Good morning/afternoon/evening! How can I assist you today?",
+    "Hi, thanks for stopping by! How may I help you?",
+    "Hello and welcome! What brings you here today?",
+    "Greetings and salutations! How are things with you?",
+    "Hey there, nice to meet you! How's your day been so far?",
+    "Well hello there! It's wonderful to make your acquaintance.",
+    "Hi, I hope you're having a fantastic day! What can I do for you?",
+    "Hello, thanks for reaching out! How may I be of service?",
+    "Hey, great to connect with you! What's on your mind?",
+    "Good day, friend! How are you feeling today?",
+    "Hello, it's a joy to have you here! What's new with you?",
+    "Hi there, I'm thrilled to meet you! How can I make your day better?",
 ]
 
 def continuous_loop():
