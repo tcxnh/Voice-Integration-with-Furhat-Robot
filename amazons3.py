@@ -5,8 +5,8 @@ import uuid
 def upload_audio(file_path):
 
     # Set AWS credentials as environment variables
-    os.environ['AWS_ACCESS_KEY_ID'] = 'AKIA6ODUZKBYB2B436NA'
-    os.environ['AWS_SECRET_ACCESS_KEY'] = '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'
+    os.environ['AWS_ACCESS_KEY_ID'] = ''
+    os.environ['AWS_SECRET_ACCESS_KEY'] = ''
 
     # Create an S3 client
     s3 = boto3.client('s3')
