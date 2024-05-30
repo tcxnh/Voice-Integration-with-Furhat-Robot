@@ -9,8 +9,6 @@ import os
 
 furhat = FurhatRemoteAPI("localhost")
 
-# 目前的问题就是把furhat说的也录进去了, 而且一定要say something要不然出bug
-
 # Say "Hi there!"
 furhat.say(text="Hi there! I am here to show your the voice cloning function of furhat robot. Please say something to me and I will try to mimic your voice")
 time.sleep(10)
@@ -39,7 +37,7 @@ def continuous_loop():
     os.makedirs(output_dir, exist_ok=True)
 
     while True:
-        output_file_path = record_audio(10)
+        output_file_path = record_audio(8)
         
         if output_file_path:
             with open(output_file_path, 'rb') as audio_file:
