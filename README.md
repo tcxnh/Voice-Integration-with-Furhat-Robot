@@ -19,7 +19,14 @@ set the bucket policy as
     ]
 }
 <br>
-add your key in "amazons3.py" os.environ['AWS_ACCESS_KEY_ID'] = '', os.environ['AWS_SECRET_ACCESS_KEY'] = ''
+add your key in "amazons3.py" os.environ['AWS_ACCESS_KEY_ID'] = '', os.environ['AWS_SECRET_ACCESS_KEY'] = ''<br>
+3. install all the packages in the requirements. txt<br>
+4. Put the IP address into "inte.py" the line 10: FurhatRemoteAPI("YOUR_FURHAT_IP_ADDRESS")
+5. The main entry is in "inte.py", just need to run this script 
 
 ### Demo Video 
-Can be found under folder demo video
+It can be found under the folder demo video
+
+
+<br><br><br>
+If have any questions please contact jocelynzhu6@gmail.com
